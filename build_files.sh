@@ -23,16 +23,45 @@
 
 
 
-# Создание виртуального окружения и активация
-sudo apt update
-sudo apt install python3.9
 
-python3 -m venv env
+
+# Создание виртуального окружения и активация
+# sudo apt update
+# sudo apt install python3.9
+
+# python3.9 -m venv env
+# source env/bin/activate
+
+# # Обновление pip и установка зависимостей
+# pip install --upgrade pip
+# pip install django djangorestframework
+# pip install -r requirements.txt
+
+# # Удаление старых миграций и очистка __pycache__
+# find . -path "*/migrations/*.py" -not -path "*/site-packages/*" -delete
+# find . -type d -name "__pycache__" -exec rm -rf {} +
+
+# # Выполнение миграций и сборка статических файлов
+# python3 manage.py makemigrations
+# python3 manage.py migrate --run-syncdb --noinput
+# python3 manage.py makemigrations --noinput
+# python3 manage.py collectstatic --noinput --clear
+
+
+
+
+
+
+
+
+
+
+
+# Активация виртуального окружения
 source env/bin/activate
 
 # Обновление pip и установка зависимостей
 pip install --upgrade pip
-pip install django djangorestframework
 pip install -r requirements.txt
 
 # Удаление старых миграций и очистка __pycache__
@@ -40,7 +69,9 @@ find . -path "*/migrations/*.py" -not -path "*/site-packages/*" -delete
 find . -type d -name "__pycache__" -exec rm -rf {} +
 
 # Выполнение миграций и сборка статических файлов
-python3 manage.py makemigrations
-python3 manage.py migrate --run-syncdb --noinput
-python3 manage.py makemigrations --noinput
-python3 manage.py collectstatic --noinput --clear
+python manage.py makemigrations
+python manage.py migrate
+python manage.py collectstatic --noinput
+
+# Деактивация виртуального окружения
+deactivate
