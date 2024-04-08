@@ -27,7 +27,7 @@
 sudo apt update
 sudo apt install python3.9
 
-python3.9 -m venv env
+python3 -m venv env
 source env/bin/activate
 
 # Обновление pip и установка зависимостей
@@ -40,7 +40,7 @@ find . -path "*/migrations/*.py" -not -path "*/site-packages/*" -delete
 find . -type d -name "__pycache__" -exec rm -rf {} +
 
 # Выполнение миграций и сборка статических файлов
-python3.9 manage.py makemigrations accounts
-python3.9 manage.py migrate --run-syncdb --noinput
-python3.9 manage.py makemigrations --noinput
-python3.9 manage.py collectstatic --noinput --clear
+python3 manage.py makemigrations accounts
+python3 manage.py migrate --run-syncdb --noinput
+python3 manage.py makemigrations --noinput
+python3 manage.py collectstatic --noinput --clear
