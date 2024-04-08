@@ -9,6 +9,9 @@ from drf_yasg import openapi
 import jwt, datetime
 from datetime import datetime, timedelta
 
+from django.conf import settings
+
+
 from .serializers import CustomUserSerializer
 from accounts.models import CustomUser, RefreshToken
 from utils.custom_logger import log_error, log_warning
@@ -120,7 +123,7 @@ class AuthenticationView(viewsets.ViewSet):
         refresh_token = generate_refresh_token(user.id)
 
 
-        return Response(
+        response = Response(
             data={
                 "jwt": access_token,
                 "refresh_token": refresh_token,
@@ -128,6 +131,8 @@ class AuthenticationView(viewsets.ViewSet):
             },
             status=status.HTTP_200_OK,
         )
+        response.set_cookie('jwt', access_token)
+        return response
     
     @swagger_auto_schema(
         operation_description="Выход для удаления токена.",
@@ -148,26 +153,116 @@ class AuthenticationView(viewsets.ViewSet):
         return response
     
 
-class UserView(APIView):
-    # permission_classes = [permissions.IsAuthenticated,]
-    def get(self, request):
-        print('++++++', dir(request), '++++++++++')
-        print('++++++', request.data, '++++++++++')
-        print('++++++', request.COOKIES, '++++++++++')
 
-        
+
+class UserView(APIView):
+
+    @swagger_auto_schema(
+        operation_description="Получение данных пользователя.",
+        operation_summary="Получение данных пользователя",
+        operation_id="retrieve_user",
+        tags=["User"],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['email', 'username'],
+            properties={
+                'email': openapi.Schema(type=openapi.TYPE_STRING, format='email', description='Новый email пользователя'),
+                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Новое имя пользователя')
+            },
+        ),   
+        responses={
+            200: openapi.Response(description="OK - Данные пользователя успешно обновлены."),
+            400: openapi.Response(description="Bad Request - Неверный запрос."),
+            404: openapi.Response(description="Not Found - Пользователь не найден"),
+        },
+    )
+
+    def get(self, request):
         token = request.COOKIES.get('jwt')
 
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
-
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
-
+        
         user = CustomUser.objects.filter(id=payload['id']).first()
+        if not user:
+            raise AuthenticationFailed('User not found!')
+        
+        user = {
+        "id": user.id,
+        "username": user.username,
+        "email": user.email
+    }
+
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
 
+    @swagger_auto_schema(
+        operation_description="Обновление данных пользователя.",
+        operation_summary="Обновление данных пользователя",
+        operation_id="update_user",
+        tags=["User"],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['email', 'username'],
+            properties={
+                'email': openapi.Schema(type=openapi.TYPE_STRING, format='email', description='Новый email пользователя'),
+                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Новое имя пользователя')
+            },
+        ),   
+        responses={
+            200: openapi.Response(description="OK - Данные пользователя успешно обновлены."),
+            400: openapi.Response(description="Bad Request - Неверный запрос."),
+            404: openapi.Response(description="Not Found - Пользователь не найден"),
+        },
+    )
+    def put(self, request):
+    
+        token = request.COOKIES.get('jwt')
+        payload = jwt.decode(token, 'secret', algorithms=['HS256'])
+        user_id = payload['id']
+        user = CustomUser.objects.get(id=user_id)
 
+        data = request.data
+        if 'email' in data:
+            user.email = data['email']
+        if 'username' in data:
+            user.username = data['username']
+
+        user.save()
+
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    
+
+
+'''
+    
+Retrieving Personal Information
+
+Endpoint: /api/me/
+Method: GET
+Header: Authorization: Bearer eyJhbGciOiJIUzI1NiBlRuOiJSxCmi-iYap1bejfnvK6M3qtnkT0ssDKA
+Response: {"id": 1, "username": "", "email": "user@example.com"}
+
+curl -X GET http://localhost:8000/api/me/ -H "Authorization: Bearer eyJhbGciOiJIUzI1NiBlRuOiJSxCmi-iYap1bejfnvK6M3qtnkT0ssDKA"
+
+
+
+
+
+Updating Personal Information
+
+Endpoint: /api/me/
+Method: PUT
+Header: Authorization: Bearer eyJhbGciOiJIUzI1NiBlRuOiJSxCmi-iYap1bejfnvK6M3qtnkT0ssDKA
+Body: {"username": "John Smith"}
+Response: {"id": 1, "username": "John Smith", "email": "user@example.com"}
+
+curl -X PUT http://localhost:8000/api/me/ -d '{"email": "newuser@example.com"}' -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiBlRuOiJSxCmi-iYap1bejfnvK6M3qtnkT0ssDKA"
+    
+'''
