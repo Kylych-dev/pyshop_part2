@@ -40,7 +40,7 @@ find . -path "*/migrations/*.py" -not -path "*/site-packages/*" -delete
 find . -type d -name "__pycache__" -exec rm -rf {} +
 
 # Выполнение миграций и сборка статических файлов
-python3 manage.py makemigrations accounts
+python3 manage.py makemigrations
 python3 manage.py migrate --run-syncdb --noinput
 python3 manage.py makemigrations --noinput
 python3 manage.py collectstatic --noinput --clear
