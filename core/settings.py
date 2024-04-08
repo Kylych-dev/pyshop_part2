@@ -2,6 +2,7 @@ from pathlib import Path
 from datetime import timedelta
 from decouple import config
 import datetime
+import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,16 +75,28 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # }
 
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": config("SQL_ENGINE", "django.db.backends.sqlite3"),
+#         "NAME": config("POSTGRES_DB", "db.sqlite3"),
+#         "USER": config("POSTGRES_USER"),
+#         "PASSWORD": config("POSTGRES_PASSWORD"),
+#         "HOST": config("POSTGRES_HOST"),
+#         "PORT": config("POSTGRES_PORT")
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": config("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": config("POSTGRES_DB", "db.sqlite3"),
-        "USER": config("POSTGRES_USER"),
-        "PASSWORD": config("POSTGRES_PASSWORD"),
-        "HOST": config("POSTGRES_HOST"),
-        "PORT": config("POSTGRES_PORT")
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "railway",
+        "USER": "postgres",
+        "PASSWORD": "igWMjrHVFmAohbzSqBIuImgHoTxUOanO",
+        "HOST": "roundhouse.proxy.rlwy.net",
+        "PORT": "10836"
     }
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
@@ -99,11 +112,16 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = 'static/'
-
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+MEDIA_URL = "media/"
+STATIC_URL = "static/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
