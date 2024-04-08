@@ -1,5 +1,8 @@
 # Build the project
 echo "Building the project..."
+python3.9 -m venv env
+source env/bin/activate
+pip install django djangorestframework
 python3.9 -m pip install -r requirements.txt
 
 echo "Make Migration..."
