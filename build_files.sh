@@ -1,13 +1,13 @@
 # Build the project
-echo "Building the project..."
+# echo "Building the project..."
 python3.9 -m venv env
 source env/bin/activate
 pip install django djangorestframework
 python3.9 -m pip install -r requirements.txt
 
-echo "Make Migration..."
+# echo "Make Migration..."
 python3.9 manage.py makemigrations --noinput
 python3.9 manage.py migrate --noinput
 
-echo "Collect Static..."
+# echo "Collect Static..."
 python3.9 manage.py collectstatic --noinput --clear
