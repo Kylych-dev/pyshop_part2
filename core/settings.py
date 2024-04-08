@@ -144,8 +144,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-
-
 CONSTANCE_CONFIG = {
     'ACCESS_SECRET_KEY': ('your_access_secret_key', 'Access Secret Key'),
     'REFRESH_SECRET_KEY': ('your_refresh_secret_key', 'Refresh Secret Key'),
