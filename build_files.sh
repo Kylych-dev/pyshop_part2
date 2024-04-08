@@ -24,6 +24,9 @@
 
 
 # Создание виртуального окружения и активация
+sudo apt update
+sudo apt install python3.9
+
 python3.9 -m venv env
 source env/bin/activate
 
