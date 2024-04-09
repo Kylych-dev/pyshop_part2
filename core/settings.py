@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
 
     # 3th apps
     'rest_framework',
@@ -39,7 +38,8 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # apps
-    'accounts'
+    # 'accounts'
+    'accounts.apps.AccountsConfig',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
