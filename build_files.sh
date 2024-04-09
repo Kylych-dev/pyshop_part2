@@ -58,13 +58,13 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 # Удаление старых миграций и очистка __pycache__
-find . -path "*/migrations/*.py" -not -path "*/site-packages/*" -delete
-find . -type d -name "__pycache__" -exec rm -rf {} +
+# find . -path "*/migrations/*.py" -not -path "*/site-packages/*" -delete
+# find . -type d -name "__pycache__" -exec rm -rf {} +
 
 # Выполнение миграций и сборка статических файлов
 python manage.py makemigrations
 python manage.py migrate
-python manage.py collectstatic --noinput
+python manage.py collectstatic
 
 # Деактивация виртуального окружения
 deactivate
