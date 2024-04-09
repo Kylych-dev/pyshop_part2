@@ -1,13 +1,10 @@
 python3.9 -m venv env
 source env/bin/activate
-print('++++++++++++++++++++++++++++++++++++++++++')
 pip3 install --upgrade pip
 pip3 install django djangorestframework
-print('++++++++++++++++++++++++++++++++++++++++++')
 pip3 install -r requirements.txt 
 python3.9 manage.py collectstatic --noinput --clear
 
-print('++++++++++++++++++++++++++++++++++++++++++')
 
 # # Build the project
 # # echo "Building the project..."
