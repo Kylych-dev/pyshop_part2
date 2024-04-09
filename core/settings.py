@@ -11,7 +11,13 @@ SECRET_KEY = 'django-insecure-n5nlw!*&vsjd#8c(10j(vkxy&*(%bn7(&0ig=vyu7k(dwc&w8a
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app','now.sh','127.0.0.1','localhost']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'pyshoppart2-production.up.railway.app'
+    ]
+
+CSRF_TRUSTED_ORIGINS = ['https://pyshoppart2-production.up.railway.app']
 
 
 INSTALLED_APPS = [
