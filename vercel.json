@@ -23,8 +23,5 @@
       "src": "/(.*)",
       "dest": "{core}/wsgi.py"
     }
-  ],
-  "rewrites": [
-    { "source": "/", "destination": "/api/index" }
   ]
 }
