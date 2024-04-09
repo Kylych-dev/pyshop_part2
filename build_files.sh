@@ -2,7 +2,7 @@ echo "Starting build process..."
 python3.9 -m venv env
 source env/bin/activate
 
-pip install -r requirements.txt 
+pip3 install -r requirements.txt 
 python3.9 manage.py collectstatic
 
 echo "Command completed successfully."
