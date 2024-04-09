@@ -21,6 +21,9 @@ CSRF_TRUSTED_ORIGINS = ['https://pyshoppart2-production.up.railway.app']
 
 
 INSTALLED_APPS = [
+    'django.contrib.staticfiles',   # +++
+    'whitenoise.runserver_nostatic',    # +++
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +46,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",    # +++
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -137,8 +141,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = BASE_DIR / 'static'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')      # ++++
+STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"  # ++++
 
 
 REST_FRAMEWORK = {
