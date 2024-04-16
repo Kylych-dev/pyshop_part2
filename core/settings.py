@@ -4,12 +4,13 @@ from decouple import config
 import datetime
 import os
 
+# BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-n5nlw!*&vsjd#8c(10j(vkxy&*(%bn7(&0ig=vyu7k(dwc&w8a'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     # apps
     # 'accounts'
     'accounts.apps.AccountsConfig',
+    'chat.apps.ChatConfig',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
@@ -61,7 +63,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,7 +144,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')      # ++++
-STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"  # ++++
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  # ++++
 
 
 REST_FRAMEWORK = {
