@@ -12,16 +12,22 @@ SECRET_KEY = 'django-insecure-n5nlw!*&vsjd#8c(10j(vkxy&*(%bn7(&0ig=vyu7k(dwc&w8a
 
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'pyshoppart2-production.up.railway.app'
-    ]
 
-CSRF_TRUSTED_ORIGINS = ['https://pyshoppart2-production.up.railway.app']
+ALLOWED_HOSTS = ['*']
+
+# ALLOWED_HOSTS = [
+#     'localhost',
+#     '127.0.0.1',
+#     'pyshoppart2-production.up.railway.app'
+#     ]
+
+# CSRF_TRUSTED_ORIGINS = ['https://pyshoppart2-production.up.railway.app']
 
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
+
     'django.contrib.staticfiles',   # +++
     'whitenoise.runserver_nostatic',    # +++
 
@@ -39,12 +45,22 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # apps
-    # 'accounts'
-    'accounts.apps.AccountsConfig',
-    'chat.apps.ChatConfig',
+    # 'accounts.apps.AccountsConfig',
+    # 'chat.apps.ChatConfig',
+    'chat'
 ]
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+ASGI_APPLICATION = 'core.asgi.application'
+
+
+# AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
