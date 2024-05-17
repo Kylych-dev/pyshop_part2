@@ -19,8 +19,24 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = ['https://pyshoppart2-production.up.railway.app']
 
+APPS = [
+    'accounts.apps.AccountsConfig',
+    'products.apps.ProductsConfig',
+]
+
+THIRD_APPS = [
+    'rest_framework',
+    'drf_yasg',
+    'constance',
+    'constance.backends.database',
+    'corsheaders',
+]
+
 
 INSTALLED_APPS = [
+    *APPS,
+    *THIRD_APPS,
+
     'django.contrib.staticfiles',   # +++
     'whitenoise.runserver_nostatic',    # +++
 
@@ -29,17 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-
-    # 3th apps
-    'rest_framework',
-    'drf_yasg',
-    'constance',
-    'constance.backends.database',
-    'corsheaders',
-
-    # apps
-    # 'accounts'
-    'accounts.apps.AccountsConfig',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
