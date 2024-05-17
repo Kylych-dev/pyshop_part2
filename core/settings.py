@@ -20,8 +20,8 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = ['https://pyshoppart2-production.up.railway.app']
 
 APPS = [
-    'accounts.apps.AccountsConfig',
-    'product.apps.ProductConfig',
+    'apps.accounts.apps.AccountsConfig',
+    'apps.product.apps.ProductConfig',
 ]
 
 THIRD_APPS = [
@@ -147,13 +147,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')      # ++++
-STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"  # ++++
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  # ++++
 
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
 }
 

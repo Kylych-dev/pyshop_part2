@@ -12,6 +12,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'id',
             'email',
             'username',
+            'refresh_token',
             'password'
             ]
         extra_kwargs = {

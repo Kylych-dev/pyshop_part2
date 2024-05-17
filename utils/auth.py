@@ -2,7 +2,7 @@ import jwt
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.conf import settings
-from accounts.models import RefreshToken
+from apps.accounts.models import RefreshToken
 
 
 def generate_access_token(user_id):

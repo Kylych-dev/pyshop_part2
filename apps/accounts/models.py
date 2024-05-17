@@ -11,14 +11,13 @@ from .manager import CustomUserManager
 class CustomUser(AbstractUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(_('username'), max_length=150, blank=True, null=True)
+    password = models.CharField(_('password'), max_length=128)
     refresh_token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
-
-
 
     class Meta:
         verbose_name = _("user")
