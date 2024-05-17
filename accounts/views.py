@@ -25,24 +25,24 @@ from utils.auth import (
 class RegisterView(viewsets.ViewSet):
     serializer_class = CustomUserSerializer
 
-    @swagger_auto_schema(
-        operation_description="Создание нового пользователя.",
-        operation_summary="Создание нового пользователя",
-        operation_id="register_user",
-        tags=["Authentication"],
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            required=['email', 'password'],
-            properties={
-                'email': openapi.Schema(type=openapi.TYPE_STRING, format='email', description='Email пользователя'),
-                'password': openapi.Schema(type=openapi.TYPE_STRING, format='password', description='Пароль пользователя')
-            },
-        ),
-        responses={
-            201: openapi.Response(description="OK - Регистрация прошла успешно."),
-            400: openapi.Response(description="Bad Request - Неверный запрос."),
-        },
-    )
+    # @swagger_auto_schema(
+    #     operation_description="Создание нового пользователя.",
+    #     operation_summary="Создание нового пользователя",
+    #     operation_id="register_user",
+    #     tags=["Authentication"],
+    #     request_body=openapi.Schema(
+    #         type=openapi.TYPE_OBJECT,
+    #         required=['email', 'password'],
+    #         properties={
+    #             'email': openapi.Schema(type=openapi.TYPE_STRING, format='email', description='Email пользователя'),
+    #             'password': openapi.Schema(type=openapi.TYPE_STRING, format='password', description='Пароль пользователя')
+    #         },
+    #     ),
+    #     responses={
+    #         201: openapi.Response(description="OK - Регистрация прошла успешно."),
+    #         400: openapi.Response(description="Bad Request - Неверный запрос."),
+    #     },
+    # )
     def register(self, request, *args, **kwargs):
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -82,25 +82,25 @@ class RegisterView(viewsets.ViewSet):
 
 
 class AuthenticationView(viewsets.ViewSet):
-    @swagger_auto_schema(
-        operation_description="Авторизация пользователя для получения токена.",
-        operation_summary="Авторизация пользователя для получения токена",
-        operation_id="login_user",
-        tags=["Authentication"],
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            required=['email', 'password'],
-            properties={
-                'email': openapi.Schema(type=openapi.TYPE_STRING, format='email', description='Email пользователя'),
-                'password': openapi.Schema(type=openapi.TYPE_STRING, format='password', description='Пароль пользователя')
-            },
-        ),   
-        responses={
-            200: openapi.Response(description="OK - Авторизация пользователя прошла успешно."),
-            400: openapi.Response(description="Bad Request - Неверный запрос."),
-            404: openapi.Response(description="Not Found - Пользователь не найден"),
-        },
-    )
+    # @swagger_auto_schema(
+    #     operation_description="Авторизация пользователя для получения токена.",
+    #     operation_summary="Авторизация пользователя для получения токена",
+    #     operation_id="login_user",
+    #     tags=["Authentication"],
+    #     request_body=openapi.Schema(
+    #         type=openapi.TYPE_OBJECT,
+    #         required=['email', 'password'],
+    #         properties={
+    #             'email': openapi.Schema(type=openapi.TYPE_STRING, format='email', description='Email пользователя'),
+    #             'password': openapi.Schema(type=openapi.TYPE_STRING, format='password', description='Пароль пользователя')
+    #         },
+    #     ),
+    #     responses={
+    #         200: openapi.Response(description="OK - Авторизация пользователя прошла успешно."),
+    #         400: openapi.Response(description="Bad Request - Неверный запрос."),
+    #         404: openapi.Response(description="Not Found - Пользователь не найден"),
+    #     },
+    # )
     def login(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
@@ -134,16 +134,16 @@ class AuthenticationView(viewsets.ViewSet):
         response.set_cookie('jwt', access_token)
         return response
     
-    @swagger_auto_schema(
-        operation_description="Выход для удаления токена.",
-        operation_summary="Выход для удаления токена",
-        operation_id="logout_user",
-        tags=["Authentication"],
-        responses={
-            201: openapi.Response(description="OK - Выход пользователя прошел успешно."),
-            400: openapi.Response(description="Bad Request - Неверный запрос."),
-        },
-    )
+    # @swagger_auto_schema(
+    #     operation_description="Выход для удаления токена.",
+    #     operation_summary="Выход для удаления токена",
+    #     operation_id="logout_user",
+    #     tags=["Authentication"],
+    #     responses={
+    #         201: openapi.Response(description="OK - Выход пользователя прошел успешно."),
+    #         400: openapi.Response(description="Bad Request - Неверный запрос."),
+    #     },
+    # )
     def logout(self, request):
         response = Response()
         response.delete_cookie('jwt')
@@ -157,25 +157,25 @@ class AuthenticationView(viewsets.ViewSet):
 
 class UserView(APIView):
 
-    @swagger_auto_schema(
-        operation_description="Получение данных пользователя.",
-        operation_summary="Получение данных пользователя",
-        operation_id="retrieve_user",
-        tags=["User"],
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            required=['email', 'username'],
-            properties={
-                'email': openapi.Schema(type=openapi.TYPE_STRING, format='email', description='Новый email пользователя'),
-                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Новое имя пользователя')
-            },
-        ),   
-        responses={
-            200: openapi.Response(description="OK - Данные пользователя успешно обновлены."),
-            400: openapi.Response(description="Bad Request - Неверный запрос."),
-            404: openapi.Response(description="Not Found - Пользователь не найден"),
-        },
-    )
+    # @swagger_auto_schema(
+    #     operation_description="Получение данных пользователя.",
+    #     operation_summary="Получение данных пользователя",
+    #     operation_id="retrieve_user",
+    #     tags=["User"],
+    #     request_body=openapi.Schema(
+    #         type=openapi.TYPE_OBJECT,
+    #         required=['email', 'username'],
+    #         properties={
+    #             'email': openapi.Schema(type=openapi.TYPE_STRING, format='email', description='Новый email пользователя'),
+    #             'username': openapi.Schema(type=openapi.TYPE_STRING, description='Новое имя пользователя')
+    #         },
+    #     ),
+    #     responses={
+    #         200: openapi.Response(description="OK - Данные пользователя успешно обновлены."),
+    #         400: openapi.Response(description="Bad Request - Неверный запрос."),
+    #         404: openapi.Response(description="Not Found - Пользователь не найден"),
+    #     },
+    # )
 
     def get(self, request):
         token = request.COOKIES.get('jwt')
@@ -200,25 +200,25 @@ class UserView(APIView):
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
 
-    @swagger_auto_schema(
-        operation_description="Обновление данных пользователя.",
-        operation_summary="Обновление данных пользователя",
-        operation_id="update_user",
-        tags=["User"],
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            required=['email', 'username'],
-            properties={
-                'email': openapi.Schema(type=openapi.TYPE_STRING, format='email', description='Новый email пользователя'),
-                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Новое имя пользователя')
-            },
-        ),   
-        responses={
-            200: openapi.Response(description="OK - Данные пользователя успешно обновлены."),
-            400: openapi.Response(description="Bad Request - Неверный запрос."),
-            404: openapi.Response(description="Not Found - Пользователь не найден"),
-        },
-    )
+    # @swagger_auto_schema(
+    #     operation_description="Обновление данных пользователя.",
+    #     operation_summary="Обновление данных пользователя",
+    #     operation_id="update_user",
+    #     tags=["User"],
+    #     request_body=openapi.Schema(
+    #         type=openapi.TYPE_OBJECT,
+    #         required=['email', 'username'],
+    #         properties={
+    #             'email': openapi.Schema(type=openapi.TYPE_STRING, format='email', description='Новый email пользователя'),
+    #             'username': openapi.Schema(type=openapi.TYPE_STRING, description='Новое имя пользователя')
+    #         },
+    #     ),
+    #     responses={
+    #         200: openapi.Response(description="OK - Данные пользователя успешно обновлены."),
+    #         400: openapi.Response(description="Bad Request - Неверный запрос."),
+    #         404: openapi.Response(description="Not Found - Пользователь не найден"),
+    #     },
+    # )
     def put(self, request):
     
         token = request.COOKIES.get('jwt')

@@ -21,7 +21,7 @@ CSRF_TRUSTED_ORIGINS = ['https://pyshoppart2-production.up.railway.app']
 
 APPS = [
     'accounts.apps.AccountsConfig',
-    'products.apps.ProductsConfig',
+    'product.apps.ProductConfig',
 ]
 
 THIRD_APPS = [
